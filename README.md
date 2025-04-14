@@ -10,8 +10,8 @@ April 5-10 > Some simmer games were down. Neutralized two attacks.
 April 10-13 Site Operating normally.
 April 13-14. The attacker flooded the website with 1 PB of download requests.
 
-I have your data and nothing is lost.
+I have your data and nothing is lost. No payment information was leaked.
 
-Working on it.
+I'm working on it.
 
 Rocco
