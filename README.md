@@ -8,6 +8,8 @@ The simmer.io website is down. We've been hit with a third DDoS attack.
 
 My google cloud hosting bill has been run up to over $100,000. I need to shut down the service.
 
+Here is my reddit post: https://www.reddit.com/r/googlecloud/comments/1jzoi8v/ddos_attack_facing_100000_bill/
+
 This includes simmer.io and sharemygame.com
 
 
