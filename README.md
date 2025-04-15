@@ -6,7 +6,7 @@ This is Rocco the founder of SIMMER.io.
 
 The simmer.io website is down. We've been hit with a third DDoS attack. 
 
-My cloud hosting bill has been run up to over $100,000. I need to shut down the service.
+My google cloud hosting bill has been run up to over $100,000. I need to shut down the service.
 
 This includes simmer.io and sharemygame.com
 
