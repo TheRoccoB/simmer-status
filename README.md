@@ -26,7 +26,7 @@ I'll prioritize getting paid users their files first.
 The billing was completely on Stripe and the hack did not affect any financial information.
 
 ## Me
-I'm very sad that this is happening. I don't know how I'm going to pay the cloud hosting bill and I'm hoping that Google cloud will offer some leniency, as I did everything in my power to lock things down.
+I'm very sad that this is happening. I don't know how I'm going to pay the cloud hosting bill and I'm hoping that Google cloud will offer some leniency, as I did everything in my power to lock things down as fast as humanly possible.
 
 Best,
 -Rocco
