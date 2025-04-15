@@ -14,9 +14,9 @@ This includes simmer.io and sharemygame.com
 ## Your games
 I am currently trying to figure out a secure way for you to get your game files that won't make me broke.
 
-My current priority is getting all the services locked up and shut down. 
+My current priority is getting all the services locked up and shut down, first though to stop the financial bleeding.
 
-I will try to put up a youtube video about how to self host unity games on Github when I am able to get you your game files securely.
+I will try to put up a youtube video about how to self host unity games on Github when I am able to get you your game files securely. You can also use itch.io which is a great service.
 
 ## Paid Customers
 If you're a paid customer of SIMMERconnect, I'll refund your latest bill.
