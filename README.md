@@ -1,17 +1,33 @@
-# simmer-status
+# simmer.io status
 
 Hello,
 
 This is Rocco the founder of SIMMER.io. 
 
-The simmer.io website is down. We've been hit with another attack.
+The simmer.io website is down. We've been hit with a third attack. 
 
-April 5-10 > Some simmer games were down. Neutralized two attacks.
-April 10-13 Site Operating normally.
-April 13-14. The attacker flooded the website with 1 PB of download requests.
+My cloud hosting bill has been run up to over $100,000. I need to shut down the service.
 
-I have your data and nothing is lost. No payment information was leaked.
+This includes simmer.io and sharemygame.com
 
-I'm working on it.
 
-Rocco
+## Your games
+I am currently trying to figure out a secure way for you to get your game files that won't make me broke.
+
+My current priority is getting all the services locked up and shut down. 
+
+I will try to put up a youtube video about how to self host unity games on Github when I am able to get you your game files securely.
+
+## Paid Customers
+If you're a paid customer of SIMMERconnect, I'll refund your latest bill.
+
+I'll prioritize getting paid users their files first.
+
+The billing was completely on Stripe and the hack did not affect any financial information.
+
+## Me
+I'm very sad that this is happening. I don't know how I'm going to pay the cloud hosting bill and I'm hoping that Google cloud will offer some leniency, as I did everything in my power to lock things down.
+
+Best,
+-Rocco
+
