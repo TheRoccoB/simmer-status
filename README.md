@@ -27,6 +27,11 @@ I'll prioritize getting paid users their files first.
 
 The billing was completely on Stripe and the hack did not affect any financial information.
 
+## Timeline
+I will try to process refunds for SIMMERconnect by Monday April 21, 2025
+
+I don't have a timeline for getting you your game data yet. I need to do it extremely carefully to avoid further attacks and unexpected cloud charges.
+
 ## Me
 I'm very sad that this is happening. I don't know how I'm going to pay the cloud hosting bill and I'm hoping that Google cloud will offer some leniency, as I did everything in my power to lock things down as fast as humanly possible.
 
