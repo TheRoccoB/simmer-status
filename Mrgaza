@@ -1,0 +1,219 @@
+using UnityEngine;
+using UnityEngine.UI;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+public class MobileGameManager : MonoBehaviour
+{
+    // ---------- الحركة ----------
+    [Header("Player Movement")]
+    public Rigidbody playerRb;
+    public Animator animator;
+    public FloatingJoystick joystick;
+    public float walkSpeed = 3f;
+    public float runSpeed = 6f;
+    public bool isRunning = false;
+    private bool isGrounded = true;
+    public float jumpForce = 6f;
+    
+    // ---------- UI Buttons ----------
+    [Header("Mobile Buttons")]
+    public Button jumpButton;
+    public Button abilityButton;
+    public Button spinButton;
+    public Toggle runToggle;
+
+    // ---------- القدرات ----------
+    [Header("Abilities")]
+    public enum AbilityType { Shield, Invisibility, Speed, FireMode }
+    public AbilityType playerAbility;
+    public GameObject shieldEffect;
+    public GameObject fireEffect;
+    public SkinnedMeshRenderer bodyRenderer;
+    private bool canUseAbility = true;
+    private float abilityCooldown = 20f;
+
+    // ---------- العملات ----------
+    [Header("Currency")]
+    public int coins = 0;
+    public int diamonds = 0;
+    public Text coinsText;
+    public Text diamondsText;
+
+    // ---------- الحاضنة ----------
+    [Header("Incubator")]
+    public List<GameObject> rewards;
+    public int incubatorCost = 100;
+
+    // ---------- الخزنة ----------
+    public List<string> ownedItems = new List<string>();
+
+    // ---------- فاير باس ----------
+    public int xp = 0;
+    public int[] firePassLevels = { 100, 300, 600 };
+    public GameObject[] firePassRewards;
+
+    // ---------- شخصية مؤقتة ----------
+    public int tempCharHours = 24;
+
+    void Start()
+    {
+        // UI Events
+        jumpButton.onClick.AddListener(Jump);
+        abilityButton.onClick.AddListener(() => StartCoroutine(UseAbility()));
+        spinButton.onClick.AddListener(SpinIncubator);
+        runToggle.onValueChanged.AddListener(OnRunToggleChanged);
+
+        coins = PlayerPrefs.GetInt("Coins", 0);
+        diamonds = PlayerPrefs.GetInt("Diamonds", 0);
+        UpdateCurrencyUI();
+    }
+
+    void FixedUpdate()
+    {
+        HandleMovement();
+    }
+
+    void HandleMovement()
+    {
+        float h = joystick.Horizontal;
+        float v = joystick.Vertical;
+        float speed = isRunning ? runSpeed : walkSpeed;
+
+        Vector3 move = new Vector3(h, 0, v).normalized * speed;
+        Vector3 moveWorld = transform.TransformDirection(move);
+        playerRb.velocity = new Vector3(moveWorld.x, playerRb.velocity.y, moveWorld.z);
+
+        animator.SetFloat("Speed", move.magnitude);
+        animator.SetBool("IsRunning", isRunning);
+    }
+
+    void OnRunToggleChanged(bool state)
+    {
+        isRunning = state;
+    }
+
+    public void Jump()
+    {
+        if (isGrounded)
+        {
+            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            animator.SetTrigger("Jump");
+            isGrounded = false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+            isGrounded = true;
+    }
+
+    IEnumerator UseAbility()
+    {
+        if (!canUseAbility) yield break;
+
+        canUseAbility = false;
+
+        switch (playerAbility)
+        {
+            case AbilityType.Shield:
+                shieldEffect.SetActive(true);
+                yield return new WaitForSeconds(5f);
+                shieldEffect.SetActive(false);
+                break;
+
+            case AbilityType.Invisibility:
+                bodyRenderer.enabled = false;
+                yield return new WaitForSeconds(4f);
+                bodyRenderer.enabled = true;
+                break;
+
+            case AbilityType.Speed:
+                walkSpeed *= 2;
+                runSpeed *= 2;
+                yield return new WaitForSeconds(6f);
+                walkSpeed /= 2;
+                runSpeed /= 2;
+                break;
+
+            case AbilityType.FireMode:
+                fireEffect.SetActive(true);
+                yield return new WaitForSeconds(3f);
+                fireEffect.SetActive(false);
+                break;
+        }
+
+        yield return new WaitForSeconds(abilityCooldown);
+        canUseAbility = true;
+    }
+
+    void SpinIncubator()
+    {
+        if (diamonds >= incubatorCost)
+        {
+            diamonds -= incubatorCost;
+            int index = UnityEngine.Random.Range(0, rewards.Count);
+            GameObject reward = rewards[index];
+            ownedItems.Add(reward.name);
+            Debug.Log("ربحت: " + reward.name);
+            UpdateCurrencyUI();
+        }
+        else
+        {
+            Debug.Log("لا تملك جواهر كافية");
+        }
+    }
+
+    public void AddCoins(int amount)
+    {
+        coins += amount;
+        PlayerPrefs.SetInt("Coins", coins);
+        UpdateCurrencyUI();
+    }
+
+    public void AddDiamonds(int amount)
+    {
+        diamonds += amount;
+        PlayerPrefs.SetInt("Diamonds", diamonds);
+        UpdateCurrencyUI();
+    }
+
+    void UpdateCurrencyUI()
+    {
+        coinsText.text = coins.ToString();
+        diamondsText.text = diamonds.ToString();
+    }
+
+    public void AddXP(int amount)
+    {
+        xp += amount;
+        CheckFirePassRewards();
+    }
+
+    void CheckFirePassRewards()
+    {
+        for (int i = 0; i < firePassLevels.Length; i++)
+        {
+            if (xp >= firePassLevels[i] && firePassRewards[i] != null)
+            {
+                firePassRewards[i].SetActive(true);
+                Debug.Log("مكافأة Fire Pass مستلمة!");
+            }
+        }
+    }
+
+    public void ActivateTemporaryCharacter()
+    {
+        long endTime = DateTimeOffset.UtcNow.AddHours(tempCharHours).ToUnixTimeSeconds();
+        PlayerPrefs.SetString("TempCharEnd", endTime.ToString());
+    }
+
+    public bool IsTemporaryCharacterActive()
+    {
+        long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        long end = long.Parse(PlayerPrefs.GetString("TempCharEnd", "0"));
+        return now < end;
+    }
+}
